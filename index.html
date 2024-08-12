@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yogesh Singh - Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #1e1e1e;
+            --text-color: #f5f5f5;
+            --primary-color: #3a3a6e;
+            --secondary-color: #6e6e9c;
+            --accent-color: #8e44ad;
+            --hover-color: #9b59b6;
+            --card-bg: #2e2e2e;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            padding: 80px 20px;
+            text-align: center;
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+            transform: skewY(-3deg);
+            margin-bottom: -60px;
+            color: var(--text-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
+            transform: skewY(3deg);
+            pointer-events: none;
+        }
+
+        header > * {
+            transform: skewY(3deg);
+            position: relative;
+        }
+
+        h1 {
+            font-size: 4em;
+            margin: 0;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+            animation: floatText 3s ease-in-out infinite;
+        }
+
+        @keyframes floatText {
+            0%, 100% { transform: translateY(0) skewY(3deg); }
+            50% { transform: translateY(-10px) skewY(3deg); }
+        }
+
+        .tagline {
+            font-size: 1.8em;
+            margin-top: 10px;
+            font-weight: 300;
+        }
+
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1001;
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        nav {
+            background-color: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 300px;
+            height: 100vh;
+            z-index: 1000;
+            transition: right 0.3s ease-in-out;
+        }
+
+        nav.open {
+            right: 0;
+        }
+
+        nav ul {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        nav ul li {
+            margin: 15px 0;
+        }
+
+        nav ul li a {
+            color: var(--text-color);
+            text-decoration: none;
+            padding: 10px 20px;
+            display: inline-block;
+            transition: all 0.3s ease;
+            font-size: 1.1em;
+            position: relative;
+            overflow: hidden;
+        }
+
+        nav ul li a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.3s ease;
+        }
+
+        nav ul li a:hover::before {
+            left: 100%;
+        }
+
+        section {
+            padding: 80px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        h2 {
+            font-size: 3em;
+            margin-bottom: 30px;
+            text-align: center;
+            color: var(--secondary-color);
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background-color: var(--accent-color);
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            transform: perspective(1000px) rotateX(0deg);
+            transform-style: preserve-3d;
+        }
+
+        .card:hover {
+            transform: perspective(1000px) rotateX(5deg) translateY(-15px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+        }
+
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .skill {
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            padding: 15px 25px;
+            border-radius: 25px;
+            font-size: 1.2em;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 10px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .skill:hover::before {
+            opacity: 1;
+        }
+
+        .skill:hover {
+            transform: scale(1.15) translateZ(10px);
+            background-color: var(--hover-color);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.3);
+        }
+
+        .projects {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .project {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            transform: perspective(1000px) rotateY(0deg);
+            transform-style: preserve-3d;
+            height: 450px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project:hover {
+            transform: perspective(1000px) rotateY(5deg) scale(1.05);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+        }
+
+        .project-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .project:hover .project-image::before {
+            opacity: 1;
+        }
+
+        .project-info {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .project h3 {
+            margin-top: 0;
+            color: var(--secondary-color);
+        }
+
+        .project-description {
+            flex-grow: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 5;
+            -webkit-box-orient: vertical;
+        }
+
+        .read-more {
+            text-align: right;
+            color: var(--accent-color);
+            cursor: pointer;
+            margin-top: 15px;
+            font-size: 1.1em;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .read-more::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background-color: var(--accent-color);
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+
+        .read-more:hover::before {
+            transform: translateX(0);
+        }
+
+        #contact {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            clip-path: polygon(0 20%, 100% 0, 100% 100%, 0 100%);
+            padding: 120px 20px 80px;
+            margin-top: -60px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #contact::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1IiBoZWlnaHQ9IjUiPgo8cmVjdCB3aWR0aD0iNSIgaGVpZ2h0PSI1IiBmaWxsPSIjZmZmIiBmaWxsLW9wYWNpdHk9IjAuMSI+PC9yZWN0Pgo8L3N2Zz4=');
+            opacity: 0.1;
+            pointer-events: none;
+        }
+
+        .contact-info {
+            text-align: center;
+            font-size: 1.3em;
+            position: relative;
+        }
+
+        .contact-info i {
+            font-size: 1.6em;
+            margin-right: 15px;
+            color: var(--accent-color);
+        }
+
+        footer {
+            background-color: var(--card-bg);
+            text-align: center;
+            padding: 30px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--accent-color), transparent);
+        }
+
+        .social-links a {
+            color: var(--text-color);
+            font-size: 1.6em;
+            margin: 0 15px;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .social-links a:hover {
+            color: var(--accent-color);
+            transform: translateY(-4px) scale(1.1);
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            nav {
+                width: 100%;
+                right: -100%;
+            }
+
+            nav.open {
+                right: 0;
+            }
+
+            header {
+                padding: 60px 20px;
+            }
+
+            h1 {
+                font-size: 2.5em;
+            }
+
+            .tagline {
+                font-size: 1.2em;
+            }
+
+            section {
+                padding: 60px 10px;
+            }
+
+            h2 {
+                font-size: 2.5em;
+            }
+
+            .card, .project, .education-item {
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+
+            .project-image {
+                height: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-toggle" id="menuToggle">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <nav id="navigation">
+        <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#education">Education</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <header>
+        <h1>Yogesh Singh</h1>
+        <p class="tagline">Senior Manager at Tata Motors | Material Management Expert</p>
+    </header>
+
+    <section id="about">
+        <div class="card">
+            <h2>About Me</h2>
+            <p>With over 14 years of experience in the automotive industry, I am a seasoned professional specializing in material management, procurement, and auditing at Tata Motors. My expertise lies in optimizing processes, implementing cost-effective solutions, and driving operational excellence.</p>
+            <p>Throughout my career, I've demonstrated a keen ability to analyze complex data, identify areas for improvement, and implement strategic solutions that significantly enhance efficiency and reduce costs. My approach combines technical knowledge with strong leadership skills, allowing me to effectively manage teams and projects to successful outcomes.</p>
+            <p>I am passionate about sustainable practices and have led initiatives to reduce environmental impact in manufacturing processes. My commitment to continuous learning keeps me at the forefront of industry trends and technological advancements in material management and supply chain optimization.</p>
+        </div>
+    </section>
+
+    <section id="experience">
+        <div class="card">
+            <h2>Experience</h2>
+            <h3>Senior Manager at Tata Motors</h3>
+            <p><strong>Role:</strong> Senior Manager in Material Audit (L5)</p>
+            <p><strong>Duration:</strong> 14 years</p>
+            <p><strong>Responsibilities:</strong> Expertise in <p><strong>Responsibilities:</strong> Expertise in CNC Trim Line Machining, SAP MM Module, MS Office, Procurement, Negotiation, Vendor Selection, Domestic & Import Purchase Order Creation, Inventory Control, Value Engineering, and Material Audit. Specific responsibilities include end-to-end reconciliation of high-value bought-out items, consumption analysis, stock adjustment, and various forms of analysis and audit functions.</p>
+            <p><strong>Projects:</strong> Improvement in store layout, material handling, lighting, and change of material carrying bins. Introduced plastic fencing chains, direct procurement from manufacturers, and led a project to make Telco Township plastic bags free.</p>
+            <p><strong>Skills:</strong> CNC & Profile Machining, SAP MM Module, MS Office, Procurement, Negotiation, Inventory Management, Value Engineering, Material Audit, Power BI.</p>
+            <p><strong>Awards and Recognition:</strong> Appreciation certificate from CSR for making Telco Township plastic-free. Winning awards in suggestion and safety quizzes.</p>
+        </div>
+    </section>
+
+    <section id="skills">
+        <h2>Skills</h2>
+        <div class="skills">
+            <div class="skill">CNC & Profile Machining</div>
+            <div class="skill">SAP MM Module</div>
+            <div class="skill">MS Office</div>
+            <div class="skill">Procurement</div>
+            <div class="skill">Negotiation</div>
+            <div class="skill">Inventory Management</div>
+            <div class="skill">Value Engineering</div>
+            <div class="skill">Material Audit</div>
+            <div class="skill">Power BI</div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <h2>Projects</h2>
+        <div class="projects">
+            <div class="project">
+                <div class="project-image" style="background-image: url('project1.jpg');"></div>
+                <div class="project-info">
+                    <h3>Project 1</h3>
+                    <p class="project-description">Improvement in store layout and material handling systems to enhance operational efficiency and reduce costs.</p>
+                    <span class="read-more">Read More <i class="fas fa-chevron-right"></i></span>
+                </div>
+            </div>
+            <div class="project">
+                <div class="project-image" style="background-image: url('project2.jpg');"></div>
+                <div class="project-info">
+                    <h3>Project 2</h3>
+                    <p class="project-description">Introduction of plastic fencing chains and direct procurement from manufacturers to streamline the supply chain.</p>
+                    <span class="read-more">Read More <i class="fas fa-chevron-right"></i></span>
+                </div>
+            </div>
+            <div class="project">
+                <div class="project-image" style="background-image: url('project3.jpg');"></div>
+                <div class="project-info">
+                    <h3>Project 3</h3>
+                    <p class="project-description">Led a project to eliminate plastic bags in Telco Township, promoting environmental sustainability.</p>
+                    <span class="read-more">Read More <i class="fas fa-chevron-right"></i></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="education">
+        <h2>Education</h2>
+        <div class="education">
+            <div class="education-item card">
+                <h3>Diploma in Mechanical Engineering</h3>
+                <p>IME Mumbai</p>
+            </div>
+            <div class="education-item card">
+                <h3>MBA (HRM)</h3>
+                <p>SHIATS, Allahabad</p>
+            </div>
+            <div class="education-item card">
+                <h3>FTA Tata Motors Machinist Trade</h3>
+                <p>Tata Motors</p>
+            </div>
+            <div class="education-item card">
+                <h3>Diploma in System Management</h3>
+                <p>APTECH</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2>Contact Me</h2>
+        <div class="contact-info">
+            <p><i class="fas fa-phone"></i> <a href="tel:+7004050529">+7004050529</a> / <a href="tel:+9234660843">+9234660843</a></p>
+            <p><i class="fas fa-envelope"></i> <a href="mailto:yogesh.87491@gmail.com">yogesh.87491@gmail.com</a></p>
+            <p><i class="fas fa-map-marker-alt"></i> Jamshedpur, Jharkhand, Pin: 831004</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2024 Yogesh Singh. All rights reserved.</p>
+        <div class="social-links">
+            <a href="https://www.linkedin.com/in/yogesh-singh" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+        </div>
+    </footer>
+
+    <script>
+        const menuToggle = document.getElementById('menuToggle');
+        const navigation = document.getElementById('navigation');
+
+        menuToggle.addEventListener('click', () => {
+            navigation.classList.toggle('open');
+            menuToggle.innerHTML = navigation.classList.contains('open') 
+                ? '<i class="fas fa-times"></i>' 
+                : '<i class="fas fa-bars"></i>';
+        });
+
+        document.querySelectorAll('.read-more').forEach(element => {
+            element.addEventListener('click', function() {
+                alert('More details coming soon!');
+            });
+        });
+
+        // Add 3D tilt effect to cards
+        const cards = document.querySelectorAll('.card');
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = (y - centerY) / 20;
+                const rotateY = (centerX - x) / 20;
+                
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(10px)`;
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px)';
+            });
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close the navigation menu on mobile
+                    navigation.classList.remove('open');
+                    menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                }
+            });
+        });
+
+        // Intersection Observer for fade-in effect
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
